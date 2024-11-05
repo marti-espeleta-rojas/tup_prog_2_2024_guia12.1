@@ -200,6 +200,7 @@
             this.btnEntregarPaquete.TabIndex = 2;
             this.btnEntregarPaquete.Text = "Entregar Paquete";
             this.btnEntregarPaquete.UseVisualStyleBackColor = true;
+            this.btnEntregarPaquete.Click += new System.EventHandler(this.btnEntregarPaquete_Click);
             // 
             // button1
             // 
@@ -209,6 +210,7 @@
             this.button1.TabIndex = 1;
             this.button1.Text = "Iniciar Reparto";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btnIniciarReparto_Click);
             // 
             // groupBox4
             // 

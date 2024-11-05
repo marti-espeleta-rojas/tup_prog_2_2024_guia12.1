@@ -9,6 +9,17 @@ namespace Ejercicio1_Despachos.Models
     public class Despachador
     {
         Repartidor camion; 
+        public Repartidor Camion
+        {
+            get
+            {
+                return camion;
+            }
+            set
+            {
+                camion = value;
+            }
+        }
         Queue<Paquete> depositos = new Queue<Paquete>();
 
         public Paquete RecibirCorrespondencia(int dni, string nombre, string direccion)
@@ -24,18 +35,22 @@ namespace Ejercicio1_Despachos.Models
             return camion;
         }
 
-        public Paquete CargarPaqueteAlCamion(Paquete pack)
+        public Paquete CargarPaqueteAlCamion()
         {
+            Paquete pack = null;
             bool tieneCapacidad = camion.TieneCapacidad();
             if (tieneCapacidad)
             {
+                pack = depositos.Dequeue();
                 camion.Cargar(pack);
                 return pack;
             }
-            else
-            {
-                throw new CapacidadLimitadaException("No hay tamaño disponible en la estructura");
-            }
+            return null;
+        }
+
+        public Paquete ObtenerSiguientePaquete()
+        {
+            return depositos.Peek();
         }
     }
 }

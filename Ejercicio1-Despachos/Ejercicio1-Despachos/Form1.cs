@@ -16,9 +16,13 @@ namespace Ejercicio1_Despachos
         public Form1()
         {
             InitializeComponent();
+            sucursal.RecibirCorrespondencia(47175513, "Martiniano", "Pellegrini 406");
+            sucursal.RecibirCorrespondencia(24264435, "Luciana", "Paraguay 107");
+            sucursal.RecibirCorrespondencia(12345678, "Javier", "Jamaica 878");
         }
 
         Despachador sucursal = new Despachador();
+        Repartidor camion = null;
 
         private void btnRecibirCorrespondencia_Click(object sender, EventArgs e)
         {
@@ -57,8 +61,14 @@ namespace Ejercicio1_Despachos
                     cargaDisp = Convert.ToInt32(laCamio.nudCapacidad.Value);
                     if (cargaDisp > 0)
                     {
-                        sucursal.PrepararCamion(cargaDisp);
+                        camion = sucursal.PrepararCamion(cargaDisp);
                     }
+                }
+                for (int i = 0; i < cargaDisp; i++)
+                {
+                    Paquete pack = sucursal.CargarPaqueteAlCamion();
+                    camion.Cargar(pack);
+                    lbxListadoAEntregar.Items.Add(pack);
                 }
             }
             //excepción para el Convert.ToInt32
@@ -80,6 +90,28 @@ namespace Ejercicio1_Despachos
                 laCamio.Close();
                 laCamio.Dispose();
             }
+        }
+
+        private void btnIniciarReparto_Click(object sender, EventArgs e)
+        {
+            Paquete pack = null;
+            if(camion != null)
+            {
+                pack = camion.Revisar();
+                tbDNIProximo.Text = Convert.ToString(pack.DNIRemitente);
+                tbDireccionProximo.Text = pack.Direccion;
+                tbNombreProximo.Text = pack.NombreRemitente;
+            }
+        }
+
+        private void btnEntregarPaquete_Click(object sender, EventArgs e)
+        {
+            tbDireccionProximo.Clear();
+            tbDNIProximo.Clear();
+            tbNombreProximo.Clear();
+            Paquete pack = null;
+            pack = camion.Descargar();
+            lbxListadoAEntregar.Items.Remove(pack);
         }
     }
 }

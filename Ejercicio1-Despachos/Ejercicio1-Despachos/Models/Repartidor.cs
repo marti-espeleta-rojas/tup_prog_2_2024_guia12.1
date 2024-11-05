@@ -20,7 +20,11 @@ namespace Ejercicio1_Despachos.Models
 
         public Paquete Revisar()
         {
-            return entregas.Peek();
+            if (entregas.Count > 0)
+            {
+                return entregas.Peek();
+            }
+            throw new CapacidadLimitadaException();
         }
 
         public void Cargar(Paquete entrega)
